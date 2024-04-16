@@ -5,6 +5,20 @@ import { getAccounts } from "../../phylloSDKService/phylloServiceAPIs";
 import Navbar from "../Navbar/Navbar";
 import "./AccountSummary.css";
 
+const flattenObj = (ob) => {
+  let result = {};
+  for (const i in ob) {
+    if (typeof ob[i] === "object" && !Array.isArray(ob[i])) {
+      const temp = flattenObj(ob[i]);
+      for (const j in temp) {
+        result[i + "." + j] = temp[j];
+      }
+    } else {
+      result[i] = ob[i];
+    }
+  }
+  return result;
+};
 const Users = () => {
   let [accounts, setAccounts] = useState([]);
   let [attributes, setAttributes] = useState({});
@@ -14,20 +28,6 @@ const Users = () => {
     await phylloSDK.openPhylloSDK();
   };
 
-  const flattenObj = (ob) => {
-    let result = {};
-    for (const i in ob) {
-      if (typeof ob[i] === "object" && !Array.isArray(ob[i])) {
-        const temp = flattenObj(ob[i]);
-        for (const j in temp) {
-          result[i + "." + j] = temp[j];
-        }
-      } else {
-        result[i] = ob[i];
-      }
-    }
-    return result;
-  };
 
   useEffect(() => {
     (async () => {
