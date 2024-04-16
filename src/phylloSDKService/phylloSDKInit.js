@@ -3,16 +3,18 @@ import { createUser, createUserToken } from "./phylloServiceAPIs";
 class PhylloSDK {
   async openPhylloSDK() {
     const timeStamp = new Date();
-    let userId = await createUser("Test App", timeStamp.getTime());
+    let userId = await createUser("bettr", timeStamp.getTime());
     let token = await createUserToken(userId);
 
     const config = {
-      clientDisplayName: "Test App",
-      environment: "sandbox",
+      clientDisplayName: "bettr",
+      environment: "staging",
       userId: userId,
       token: token,
       workPlatformId: null,
     };
+
+    console.log(config,'config oasfaf')
 
     const phylloConnect = window.PhylloConnect.initialize(config);
 
